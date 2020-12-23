@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>EPA Continuous Assessment 1</title>
+</head>
+<body>
+
+<h1 style="color:red;">EPA Continuous Assessment 1</h1>
+<h2 style="color:blue;" >How to Use Docker as per EPA Labs</h2>
+<p>Docker is a set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.
+</p>
+<p>In our labs we learned how to use Docker container technology to build images.  We learned how to construct a docker image on our host using docker software.
+</p>
+
+Firstly we learned how to construct Dockerfiles which allow us to build images. Dockerfiles contain a set of instructions that allow you to build an image.  All dockerfiles begin with a FROM instruction which initialises a base build stage with the user specified image to run in our docker container.  Further useful instructions such as COPY, RUN, WORKDIR and CMD all allow users to create and image to run in the docker container.</p>  
+
+<p>To practice the construction of docker images we used the Google Cloud platform to build our Dockerfiles. Docker is already built into the Google Cloud platform so no installation of software was necessary.</p>
+
+<p>To build a docker image in Goolge Cloud you should create a dedicated directory for the project.  Within this directory you need to create your relevant dockerfile and add instructions.  This can be done using the Nano editing software.  Users also need to create any files that are to be copied or used by the image if they are referenced by an instruction in the dockerfile.</p>
+
+<center><h5 style="color:green;" > Example of a Dockerfile</h5></center>
+<center>
+<table style="width:50%">
+  <tr>
+    <th style="text-align:left">FROM Ubuntu:latest</th>
+  </tr>
+  <tr>
+    <th style="text-align:left">COPY script.sh /</th>
+  </tr>
+  <tr>
+    <th style="text-align:left">RUN chmod u+x /script.sh</th>
+  </tr>
+  <tr>
+    <th style="text-align:left" >CMD ["script.sh"] </th>
+  </tr>
+</table>
+</center>
+
+<p>When you create the dockerfile above and the script.sh file in the relvant directory on you host you can then build your image using  simple codes with descriptions which should be executed in power shell on your host.</p> 
+
+<dl>
+  <dt>docker build .</dt>
+  <dd>This is the docker code to build your image from the root directory</dd>
+  <dt>docker images</dt>
+  <dd>This command allows you to view your built image along with information on this image such as ID and size.  You will also see other images running if you have created more than one.</dd>
+  <dt>docker run [your image]</dt>
+  <dd>This command runs your image</dd>
+</dl>
+
+<p>The images that are created are temporary however there is a way in Google Cloud to permanently save your containers to an internal permanent repo.</p>
+
+<h2 style="color:blue;" >Description on the Completion of this CA</h2>
+
+<p>Firstly I created a directory in my Google Cloud platform called CA1.  This was the location to store all files relating to this CA.</p>
+<p>In the directory I created two files.  These were the dockerfile to create the Python3 image I needed and the CA1.html file as required in the CA.</p>
+<p>I used nano editor to edit the dockerfile.  I inserted the below instructions.</p>
+
+<center>
+<table style="width:50%">
+  <tr>
+    <th style="text-align:left">FROM python:3</th>
+  </tr>
+  <tr>
+    <th style="text-align:left">WORKDIR /</th>
+  </tr>
+  <tr>
+    <th style="text-align:left">COPY CA1.html /</th>
+  </tr>
+  <tr>
+    <th style="text-align:left" >CMD python -m http.server 8080</th>
+  </tr>
+</table>
+</center>
+<p>My intent in these instructions was to take an approved Python3 image from Docker Hub and use it in my image.  The image was to define a work directory at the root file of the image and copy my html file CA1.html to the same location.  The CMD was to run the http.server on port 8080. It took me a little while to figure out but once I mapped the port on the image to listen on 8090 I was then able to browse to the CA1.html using the browse to option in Google Cloud and also changing the browsing port there to 8090</p>
+
+<dl>
+  <dt>docker run -p [my docker image] 8090:8080 </dt>
+  <dd>This is the command I ran to get the image to listen on port 8090 and I was then able to browse to CA1.html</dd>
+</dl>
+<p>I used w3schools to refresh my html skills and produced this rather basic but effective page.</p>
+<h2 style="color:blue;" >Links to Outside Resources</h2>
+<p>Below is a list of some links I found useful in building my image and completing this CA.</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/builder">How to create Dockerfiles.</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Docker_(software)">Wikipedia page on Docker and it's history</a></li>
+<li><a href="https://www.w3schools.com/html/default.asp">A great tutorial site for practicing languages like html</a></li>
+<li><a href="https://stackoverflow.com/questions/51016945/create-a-dockerfile-that-runs-a-python-http-server-to-display-an-html-file">This page helped me figure out my CMD issues and helped with mapping the correct port to the image</a></li>
+</ul>
+</body>
+</html>
+
